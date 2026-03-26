@@ -1,5 +1,5 @@
 name: Deployment using kubectl
-on:
+on: 
   workflow_call:
     inputs:
       ENVIRONMENT:
@@ -14,7 +14,7 @@ on:
       KUBECONFIG:
         description: 'Kubeconfig file content for accessing the Kubernetes cluster.'
         required: true
-jobs:
+jobs:        
   deploy:
     environment: ${{ inputs.ENVIRONMENT }}
     env:
@@ -35,7 +35,7 @@ jobs:
           mkdir -p ~/.kube
           echo "${{ secrets.KUBECONFIG }}" > ~/.kube/config
           kubectl version
-          kubectl get nodes
+          kubectl get nodes     
       - name: Install yq
         run: |
           sudo curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o /usr/local/bin/yq
@@ -55,5 +55,5 @@ jobs:
           kubectl apply -f manifests/ -n $NAMESPACE
       - name: verify deployment
         run: |
-          kubectl rollout status deployment/athapp -n $NAMESPACE
+          kubectl rollout status deployment/thinknyxapp -n $NAMESPACE
           kubectl get all -n $NAMESPACE
